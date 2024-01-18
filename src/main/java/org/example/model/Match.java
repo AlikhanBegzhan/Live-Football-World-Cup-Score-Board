@@ -1,7 +1,5 @@
 package org.example.model;
 
-import java.util.Objects;
-
 public class Match {
 
     String teamHomeName;
@@ -9,8 +7,10 @@ public class Match {
 
     // Not sure about fractional scores,
     // therefore considering only whole numbers
-    int teamHomeScore;
-    int teamAwayScore;
+    Integer teamHomeScore;
+    Integer teamAwayScore;
+
+    Integer sumScore;
 
     // Timestamp value
     long matchStartTime;
@@ -31,26 +31,47 @@ public class Match {
         this.teamAwayName = teamAwayName;
     }
 
-    public int getTeamHomeScore() {
+    public Integer getTeamHomeScore() {
         return teamHomeScore;
     }
 
-    public void setTeamHomeScore(int teamHomeScore) {
+    public void setTeamHomeScore(Integer teamHomeScore) {
         this.teamHomeScore = teamHomeScore;
     }
 
-    public int getTeamAwayScore() {
+    public Integer getTeamAwayScore() {
         return teamAwayScore;
     }
 
-    public void setTeamAwayScore(int teamAwayScore) {
+    public void setTeamAwayScore(Integer teamAwayScore) {
         this.teamAwayScore = teamAwayScore;
     }
 
+    public Integer getSumScore() {
+        return teamHomeScore + teamAwayScore;
+    }
+
+    public void setSumScore(Integer sumScore) {
+        this.sumScore = sumScore;
+    }
+
+    public long getMatchStartTime() {
+        return matchStartTime;
+    }
+
+    public void setMatchStartTime(long matchStartTime) {
+        this.matchStartTime = matchStartTime;
+    }
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Match match)) return false;
-        return teamHomeScore == match.teamHomeScore && teamAwayScore == match.teamAwayScore && matchStartTime == match.matchStartTime && Objects.equals(teamHomeName, match.teamHomeName) && Objects.equals(teamAwayName, match.teamAwayName);
+    public String toString() {
+        return "Match{" +
+                "teamHomeName='" + teamHomeName + '\'' +
+                ", teamAwayName='" + teamAwayName + '\'' +
+                ", teamHomeScore=" + teamHomeScore +
+                ", teamAwayScore=" + teamAwayScore +
+                ", sumScore=" + sumScore +
+                ", matchStartTime=" + matchStartTime +
+                '}';
     }
 }
