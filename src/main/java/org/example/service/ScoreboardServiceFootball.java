@@ -14,62 +14,53 @@ public class ScoreboardServiceFootball implements ScoreboardService {
     public void startGame(String teamHomeName, String teamAwayName, Scoreboard scoreboard) {
         long unixTime = System.currentTimeMillis() / 1000L;
 
-        if (teamHomeName.isBlank() || teamAwayName.isBlank()) {
-            System.out.println("Home Team name or Away Team name cannot be empty");
-            return;
-        }
-
         if (scoreboard == null) {
             System.out.println("Scoreboard is not found");
             return;
         }
 
-        // Check for duplicate matches
-        if (findMatchByTeamNames(teamHomeName, teamAwayName, scoreboard) != null) {
-            System.out.println("Duplicate match with Home Team name " + teamHomeName
-                    + " and Away Team name " + teamAwayName);
+        if ((teamHomeName != null && !teamHomeName.isBlank())
+                || (teamHomeName != null && !teamAwayName.isBlank())) {
+            // Check for duplicate matches
+            if (findMatchByTeamNames(teamHomeName, teamAwayName, scoreboard) != null) {
+                System.out.println("Duplicate match with Home Team name " + teamHomeName
+                        + " and Away Team name " + teamAwayName);
+            } else {
+                Match footballGame = new FootballMatch(teamHomeName, 0, teamAwayName, 0, unixTime);
+                scoreboard.getMatches().add(footballGame);
+            }
         } else {
-            Match footballGame = new FootballMatch(teamHomeName, 0, teamAwayName, 0, unixTime);
-            scoreboard.getMatches().add(footballGame);
+            System.out.println("Home Team name or Away Team name cannot be empty");
         }
+
     }
 
     @Override
     public void updateScore(Integer teamHomeScore, Integer teamAwayScore, Match match, Scoreboard scoreboard) {
 
-        if (teamHomeScore != null || teamAwayScore != null) {
-            System.out.println("Home Team score or Away Team score cannot be null");
+        if (match == null || scoreboard == null) {
+            System.out.println("Match or Scoreboard is not found");
             return;
         }
 
-        if (match == null) {
-            System.out.println("Match is not found");
-            return;
-        }
-
-        if (scoreboard == null) {
-            System.out.println("Scoreboard is not found");
-            return;
-        }
-
-        if (findMatchByTeamNames(match.getTeamHomeName(), match.getTeamAwayName(), scoreboard) != null) {
-            updateMatchScore(teamHomeScore, teamAwayScore, match, scoreboard);
+        if (teamHomeScore != null && teamAwayScore != null) {
+            if (findMatchByTeamNames(match.getTeamHomeName(), match.getTeamAwayName(), scoreboard) != null) {
+                updateMatchScore(teamHomeScore, teamAwayScore, match, scoreboard);
+            } else {
+                System.out.println("Match with Home Team name " + match.getTeamHomeName()
+                        + " and Away Team name " + match.getTeamAwayName() + " is not found");
+            }
         } else {
-            System.out.println("Match with Home Team name " + match.getTeamHomeName()
-                    + " and Away Team name " + match.getTeamAwayName() + " is not found");
+            System.out.println("Home Team score or Away Team score cannot be null");
         }
+
     }
 
     @Override
     public void finishGame(Match match, Scoreboard scoreboard) {
 
-        if (match == null) {
-            System.out.println("Match is not found");
-            return;
-        }
-
-        if (scoreboard == null) {
-            System.out.println("Scoreboard is not found");
+        if (match == null || scoreboard == null) {
+            System.out.println("Match or Scoreboard is not found");
             return;
         }
 
@@ -86,6 +77,7 @@ public class ScoreboardServiceFootball implements ScoreboardService {
 
             return scoreboard.getMatches();
         } else {
+            System.out.println("Scoreboard is not found");
             return new ArrayList<>();
         }
     }
@@ -114,9 +106,10 @@ public class ScoreboardServiceFootball implements ScoreboardService {
         for (Match matchSc : scoreboard.getMatches()) {
             if (matchSc.equals(match)) {
                 scoreboard.getMatches().remove(matchSc);
-                break;
+                return;
             }
         }
+        System.out.println("Match is not found on the scoreboard");
     }
 
 }

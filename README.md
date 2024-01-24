@@ -3,3 +3,5 @@ Match:
 - the match start time is in Unix timestamp value
 
 - Console printing in methods is done for else cases
+- Score updating is possible with same score again
+- Some test cases without comparing data to check null conditions

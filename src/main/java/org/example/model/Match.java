@@ -1,5 +1,7 @@
 package org.example.model;
 
+import java.util.Objects;
+
 public class Match {
 
     String teamHomeName;
@@ -64,14 +66,14 @@ public class Match {
     }
 
     @Override
-    public String toString() {
-        return "Match{" +
-                "teamHomeName='" + teamHomeName + '\'' +
-                ", teamAwayName='" + teamAwayName + '\'' +
-                ", teamHomeScore=" + teamHomeScore +
-                ", teamAwayScore=" + teamAwayScore +
-                ", sumScore=" + sumScore +
-                ", matchStartTime=" + matchStartTime +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Match match)) return false;
+        return matchStartTime == match.matchStartTime && Objects.equals(teamHomeName, match.teamHomeName) && Objects.equals(teamAwayName, match.teamAwayName) && Objects.equals(teamHomeScore, match.teamHomeScore) && Objects.equals(teamAwayScore, match.teamAwayScore) && Objects.equals(sumScore, match.sumScore);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(teamHomeName, teamAwayName, teamHomeScore, teamAwayScore, sumScore, matchStartTime);
     }
 }

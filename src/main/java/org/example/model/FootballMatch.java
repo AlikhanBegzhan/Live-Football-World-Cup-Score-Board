@@ -1,6 +1,6 @@
 package org.example.model;
 
-public class FootballMatch extends Match{
+public class FootballMatch extends Match {
 
     public FootballMatch(String teamHomeName, int teamHomeScore, String teamAwayName, int teamAwayScore, long matchStartTime) {
         super.teamHomeName = teamHomeName;
@@ -10,5 +10,15 @@ public class FootballMatch extends Match{
         super.matchStartTime = matchStartTime;
     }
 
-
+    @Override
+    public String toString() {
+        return "FootballMatch{" +
+                "teamHomeName='" + teamHomeName + '\'' +
+                ", teamAwayName='" + teamAwayName + '\'' +
+                ", teamHomeScore=" + teamHomeScore +
+                ", teamAwayScore=" + teamAwayScore +
+                ", sumScore=" + sumScore +
+                ", matchStartTime=" + matchStartTime +
+                '}';
+    }
 }
